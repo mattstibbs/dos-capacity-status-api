@@ -1,24 +1,86 @@
 pipeline {
-    agent any
+    agent {
+        label 'jenkins-slave'
+    }
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
+
     stages {
         stage("Print Variables") {
             steps {
                 script {
-                    sh 'make pipeline-print-variables'
+                    echo 'make pipeline-print-variables'
                 }
             }
         }
-        stage("Unit Test") {
+        stage("Plan Deployment") {
             steps {
                 script {
-                    sh 'make pipeline-test-suite'
+                    echo 'make project-plan-deployment'
+                }
+            }
+        }
+        stage("Build") {
+            when {
+                expression {
+                    return true
+                }
+            }
+            steps {
+                script {
+                    echo 'build'
+                }
+            }
+        }
+        stage("Code Quality Gate") {
+            when {
+                expression {
+                    return true
+                }
+            }
+            steps {
+                script {
+                    echo 'code quality gate'
+                }
+            }
+        }
+        stage("Unit Test Gate") {
+            steps {
+                script {
+                    echo 'unit test gate'
+                }
+            }
+        }
+        stage("Regression Test Gate") {
+            when {
+                expression {
+                    return true
+                }
+            }
+            steps {
+                script {
+                    echo 'regression test gate'
+                }
+            }
+        }
+        stage("Deploy") {
+            when {
+                expression {
+                    return true
+                }
+            }
+            steps {
+                script {
+                    echo 'deploy'
                 }
             }
         }
     }
     post {
         always {
-            sh 'make pipeline-test-cleanup'
+            echo 'make pipeline-test-cleanup'
         }
     }
 }
