@@ -406,8 +406,7 @@ docker-run-python: ### Run python container - mandatory: CMD; optional: SH=true,
 			--env XDG_CACHE_HOME=/tmp/.cache \
 			--env PROFILE=$(PROFILE) \
 			--volume $(PROJECT_DIR):/project \
-			--volume $(HOME)/.python/pip/cache:/tmp/.cache/pip \
-			--volume $(HOME)/.python/pip/packages:/tmp/.packages \
+			--volume $(HOME)/.python/pip:/tmp \
 			--network $(DOCKER_NETWORK) \
 			--workdir /project/$(DIR) \
 			$(ARGS) \
@@ -429,8 +428,7 @@ docker-run-python: ### Run python container - mandatory: CMD; optional: SH=true,
 			--env XDG_CACHE_HOME=/tmp/.cache \
 			--env PROFILE=$(PROFILE) \
 			--volume $(PROJECT_DIR):/project \
-			--volume $(HOME)/.python/pip/cache:/tmp/.cache/pip \
-			--volume $(HOME)/.python/pip/packages:/tmp/.packages \
+			--volume $(HOME)/.python/pip:/tmp \
 			--network $(DOCKER_NETWORK) \
 			--workdir /project/$(DIR) \
 			$(ARGS) \
